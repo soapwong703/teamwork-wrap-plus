@@ -8,6 +8,7 @@
     "compile": "electron-webpack",
     "dist": "yarn compile && electron-builder",
     "dist:windows": "yarn compile && electron-builder build --win",
+    "dist:mac": "yarn compile && electron-builder build --mac -c.compression=store -c.mac.identity=null",
     "dist:dir-nosign": "yarn dist --dir -c.compression=store -c.mac.identity=null",
     "dist:dir": "yarn dist --dir -c.compression=store"
   },
@@ -25,13 +26,25 @@
     },
     "mac": {
       "category": "productivity",
-      "target": {
-        "target": "dmg",
-        "arch": [
-          "arm64",
-          "x64"
-        ]
-      },
+      "target": [
+        {
+          "target": "mas",
+          "arch": [
+            "universal"
+          ]
+        },
+        {
+          "target": "mas-dev"
+        },
+        {
+          "target": "dmg",
+          "arch": [
+            "arm64",
+            "x64",
+            "universal"
+          ]
+        }
+      ],
       "type": "distribution",
       "hardenedRuntime": true,
       "gatekeeperAssess": false,
